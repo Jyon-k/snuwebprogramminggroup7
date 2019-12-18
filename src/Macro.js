@@ -6,6 +6,7 @@ class Macro extends Component {
       <div>There is a room for {title}</div>
     )
   }
+  
   emptyDetector = (classOfInterest) => {
     var resDom = document.implementation.createHTMLDocument('testDom')
     resDom.documentElement.innerHTML = classOfInterest;
