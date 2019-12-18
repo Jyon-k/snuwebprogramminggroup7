@@ -1,29 +1,42 @@
 
 var http = require('http');
+var localStorage = require('localStorage')
+
 http.createServer(function (req, res) {
     var jsonData = {};
     var chunkString = "";
     req.on('data', function (chunk) {
         chunkString += chunk;
         const splittedStringChunks = chunkString.split('&');
-        splittedStringChunks.forEach((splittedStringChunk) => {jsonData[splittedStringChunk.split('=')[0]] = splittedStringChunk.split('=')[1]})
+        splittedStringChunks.forEach((splittedStringChunk) => { jsonData[splittedStringChunk.split('=')[0]] = splittedStringChunk.split('=')[1] })
         //jsonData = JSON.stringify(jsonChunk);
     })
     req.on('end', function () {
         var reqObj = jsonData;
-        getCookie(reqObj.id, reqObj.psw)
-        .then((resObj) => {
-            res.writeHead(200);
-            res.end(JSON.stringify(resObj));
-        });
-        })
+        if (reqObj.id !== undefined) {
+            console.log("log");
+            getLogin(reqObj.id, reqObj.psw)
+                .then((resObj) => {
+                    res.writeHead(200);
+                    res.end(JSON.stringify(resObj));
+                });
+        }
+        else {
+            console.log("reg");
+            registerClass(reqObj.cb, reqObj.ocr)
+                .then((resObj) => {
+                    res.writeHead(200);
+                    console.log(resObj);
+                    res.end(JSON.stringify(resObj));
+                });
+        }
+    })
 }).listen(3001, 'localhost')
 console.log('Server running at http://127.0.0.1:3001/');
 
 
-const getCookie = (id, psw) => {
+const getLogin = (id, psw) => {
     return new Promise((resolve) => {
-        var retJSON = {};
         var request = require('request');
         request.post({
             url: 'http://sugang.snu.ac.kr/sugang/j_login',
@@ -35,10 +48,11 @@ const getCookie = (id, psw) => {
             }
         }, function (err, res) {
             var cookie = res.headers["set-cookie"]
+            localStorage.setItem('__cookie', cookie);
             request.get({
                 url: 'http://sugang.snu.ac.kr/sugang/cc/cc210.action',
                 headers: {
-                    'Cookie': cookie
+                    'Cookie': localStorage.getItem('__cookie')
                 }
             }, function (err, res) {
                 resolve(res.toJSON());
@@ -47,5 +61,24 @@ const getCookie = (id, psw) => {
     });
 }
 
+const registerClass = (checkBoxNumber, ocrNumber) => {
+    return new Promise((resolve) => {
+        var request = require('request');
+        request.post({
+            url: 'http://sugang.snu.ac.kr/sugang/ca/ca101.action',
+            headers: {
+                'Cookie': localStorage.getItem('__cookie')
+            },
+            form: {
+                "check": checkBoxNumber,
+                "inputText": ocrNumber,
+                "workType": "I"
+            }
+        }, function (err, res) {
+            resolve(res.toJSON());
+        })
+    });
+
+}
 
 

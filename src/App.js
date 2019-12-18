@@ -2,13 +2,16 @@
 
 import React, {useState} from 'react';
 import './App.css';
-import login from './Auth'
+import Auth from './Auth'
 import Macro from './Macro';
 
 function App() {
 
+  var atest = new Auth();
   const [id, setId] = useState(null);
   const [psw, setPsw] = useState(null);
+  const [cb, setCb] = useState(null);
+  const [ocr, setOcr] = useState(null);
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -18,13 +21,21 @@ function App() {
     if(!psw) {
       return alert('input yout password');
     }
-    login(id, psw)
+    atest.login(id, psw)
     .then((res) => {
       //console.log(res);
-      var test = new Macro();
-      test.emptyDetector(res);
+      var mtest = new Macro();
+      mtest.emptyDetector(res);
     });
   } 
+
+  const onRegister = (e) => {
+    e.preventDefault();
+    atest.register(cb, ocr)
+    .then((res) => {
+      console.log(res);
+    })
+  }
 
   //var test = new Macro();
   //test.callSuperagent();
@@ -36,6 +47,13 @@ function App() {
         <input type="password" placeholder="password"
           onChange={(e) => setPsw(e.target.value)} />
         <input type="submit" value="Login" />
+      </form>
+      <form onSubmit={onRegister}>
+        <input type="text" placeholder="cb"
+          onChange={(e) => setCb(e.target.value)} />
+        <input type="text" placeholder="ocr"
+          onChange={(e) => setOcr(e.target.value)} />
+        <input type="submit" value="Register" />
       </form>
 
     </div>

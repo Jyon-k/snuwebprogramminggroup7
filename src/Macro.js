@@ -12,11 +12,9 @@ class Macro extends Component {
     resDom.documentElement.innerHTML = classOfInterest;
     console.log(resDom);
 
-
     var a = [];
     console.log(resDom.getElementsByTagName('tbody'))
     for (var i = 0; i < resDom.getElementsByTagName("tbody")[1].children.length / 3; i++) {
-      console.log(i);
       a.push([resDom.getElementsByTagName("tbody")[1].children[3 * i].children[7].innerText, resDom.getElementsByTagName("tbody")[1].children[3 * i].children[13].innerText, document.getElementsByTagName("tbody")[1].children[3 * i].children[14].innerText]);
     }
     for (var i = 0; i < a.length; i++) {
