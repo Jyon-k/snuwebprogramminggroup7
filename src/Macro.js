@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 class Macro extends Component {
 
   emptyDetector = (classOfInterest) => {
-    var resDom = document.implementation.createHTMLDocument('testDom')
+    console.log("macro")
+    var resDom = document.implementation.createHTMLDocument('resDom')
     resDom.documentElement.innerHTML = classOfInterest;
     console.log(resDom);
 

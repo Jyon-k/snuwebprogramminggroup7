@@ -6,19 +6,21 @@
 /* eslint-disable react/jsx-filename-extension */
 
 class Auth {
-    login = (id, psw) => {
+    login = (__id, __psw) => {
         return new Promise((resolve) => {
             var request = require('request');
             var loginData = {
-                id: id,
-                psw: psw
+                id: __id,
+                psw: __psw
             }
             request.post({
                 url: 'http://localhost:3001',
                 form: loginData
             }, function (err, res) {
                 if (err) console.log(err)
-                else resolve(res.body.body);
+                else {
+                    resolve(res.body);
+                }
             });
         })
     };

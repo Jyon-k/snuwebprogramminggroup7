@@ -21,7 +21,7 @@ http.createServer(function (req, res) {
                     res.end(JSON.stringify(resObj));
                 });
         }
-        else {
+        else if (reqObj.cb !== undefined) {
             console.log("reg");
             registerClass(reqObj.cb, reqObj.ocr)
                 .then((resObj) => {
@@ -29,6 +29,10 @@ http.createServer(function (req, res) {
                     console.log(resObj);
                     res.end(JSON.stringify(resObj));
                 });
+        }
+        else {
+            console.log("img");
+            saveImgToLocal();
         }
     })
 }).listen(3001, 'localhost')
@@ -48,13 +52,17 @@ const getLogin = (id, psw) => {
             }
         }, function (err, res) {
             var cookie = res.headers["set-cookie"]
+            localStorage.removeItem('__cookie');
             localStorage.setItem('__cookie', cookie);
+            console.log(localStorage.getItem('__cookie'));
             request.get({
                 url: 'http://sugang.snu.ac.kr/sugang/cc/cc210.action',
                 headers: {
                     'Cookie': localStorage.getItem('__cookie')
                 }
             }, function (err, res) {
+                console.log(res.headers['Set-Cookie'])
+                console.log(res.toJSON());
                 resolve(res.toJSON());
             })
         })
@@ -78,7 +86,21 @@ const registerClass = (checkBoxNumber, ocrNumber) => {
             resolve(res.toJSON());
         })
     });
-
 }
 
+const saveImgToLocal = () => {
+    const download = require('image-downloader')
+
+    // Download to a directory and save with the original filename
+    const options = {
+        url: 'http://sugang.snu.ac.kr/sugang/ca/number.action?v=0.28415202633175474',
+        dest: './number.jpg'                // Save to /path/to/dest/image.jpg
+    }
+
+    download.image(options)
+        .then(({ filename, image }) => {
+            console.log('Saved to', filename)  // Saved to /path/to/dest/image.jpg
+        })
+        .catch((err) => console.error(err));
+}
 

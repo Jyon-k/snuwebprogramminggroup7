@@ -6,32 +6,45 @@
 import React from 'react';
 import superagent from 'superagent'
 
-//console Ã¢¿¡¼­ ÀÌ¹ÌÁö °ª Ãâ·Â
+//console Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
+class OCR {
+  saveImg = () => {
+    return new Promise((resolve) => {
+      var request = require('request');
+      request.get({
+        url: 'http://localhost:3001'
+      }, function (err, res) {
+        if (err) console.log(err)
+        else resolve(res);
+      });
+    })
+  };
+}
 function App() {
   superagent
-  .post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDCygc6BPZ0Fj3ApJEWHgLeAqZlawWm5Bw')
-  .send({
-          'requests': [
+    .post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDCygc6BPZ0Fj3ApJEWHgLeAqZlawWm5Bw')
+    .send({
+      'requests': [
+        {
+          'image': {
+            'source': {
+              'imageUri': 'http://sugang.snu.ac.kr/sugang/ca/number.action?v=0.28415202633175474' //ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½
+            }
+          },
+          'features': [
             {
-              'image': {
-                'source': {
-                  'imageUri': 'http://sugang.snu.ac.kr/sugang/ca/number.action?v=0.28415202633175474' //ÀÌ¹ÌÁö ¼Ò½º
-                }
-              },
-              'features': [
-                {
-                  'type': 'DOCUMENT_TEXT_DETECTION'
-                }
-              ]
+              'type': 'DOCUMENT_TEXT_DETECTION'
             }
           ]
-        }) // sends a JSON post body
-  .set('accept', 'json')
-    .then((response) => eval("("+response.text+")"))
+        }
+      ]
+    }) // sends a JSON post body
+    .set('accept', 'json')
+    .then((response) => eval("(" + response.text + ")"))
     .then((res) => console.log(res.responses[0].textAnnotations[0].description))
     .catch((err) => console.error(err));
   return 0;
 }
 
-export default App;
+export default OCR;
 
