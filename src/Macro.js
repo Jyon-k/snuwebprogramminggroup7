@@ -10,10 +10,10 @@ class Macro extends Component {
 
     var a = [];
     console.log(resDom.getElementsByTagName('tbody'))
-    for (var i = 0; i < resDom.getElementsByTagName("tbody")[1].children.length/3; i++) {
-      a.push([resDom.getElementsByTagName("tbody")[1].children[3 * i].children[7].innerText, 
-      resDom.getElementsByTagName("tbody")[1].children[3 * i].children[13].innerText, 
-      resDom.getElementsByTagName("tbody")[1].children[3 * i].children[14].innerText]);
+    for (var i = 0; i < resDom.getElementsByTagName("tbody")[0].children.length/3; i++) {
+      a.push([resDom.getElementsByTagName("tbody")[0].children[3 * i].children[7].innerText, 
+      resDom.getElementsByTagName("tbody")[0].children[3 * i].children[13].innerText, 
+      resDom.getElementsByTagName("tbody")[0].children[3 * i].children[14].innerText]);
     }
     for (var i = 0; i < a.length; i++) {
       if (parseInt(a[i][1].split(" (")[0]) > parseInt(a[i][2])) {
