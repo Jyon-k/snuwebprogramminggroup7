@@ -11,6 +11,7 @@
 
 ### 3. superagent로 받아온 response parsing하는 문제
 - document.implementation.createHTMLDocument()를 이용해서 response를 xml 형식으로 변환, 해당 DOM 내에서 데이터 추출
+- 이 과정에서 기존 document와 response에서 변환된 html 내용이 다른 것을 파악, 문제 해결
 
 ### 4. 한글 깨짐 문제
 -
