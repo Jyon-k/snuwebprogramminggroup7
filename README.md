@@ -15,5 +15,6 @@
 
 ### 4. Same Origin 정책으로 인한 Cookie 열람의 어려움
 - 로그인 정보를 유지하기 위해서는 Cookie를 얻고, 보낼 수 있어야함
-- Javascript를 이용한 local server를 구축하여 우회적으로 Cookie 열람
+- Request 로 Same Origin 정책으로인한 문제를 우회해도 React 상에서는 Cookie를 열람하지 못함
+- Javascript를 이용한 local server를 구축하고 이를 통해 우회적으로 Cookie 열람
 
