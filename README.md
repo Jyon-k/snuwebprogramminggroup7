@@ -3,15 +3,17 @@
 ## Problem & Solution
 
 ### 1. CORS 문제 
-- superagent 사용
+- superagent 및 Moesif CORS 사용
 
 ### 2. OCR 누를때마다 링크 바뀌는 현상
 - 
 
 ### 3. superagent로 받아온 response parsing하는 문제
-- document.implementation.createHTMLDocument()를 이용해서 xml 형식으로 변환, 해당 DOM 내에서 데이터 추출
+- document.implementation.createHTMLDocument()를 이용해서 response를 xml 형식으로 변환, 해당 DOM 내에서 데이터 추출
 
 ### 4. 한글 깨짐 문제
+-
+
 
 ***
 
