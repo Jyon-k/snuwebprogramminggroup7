@@ -62,7 +62,6 @@ const getLogin = (id, psw) => {
                 }
             }, function (err, res) {
                 console.log(res.headers['Set-Cookie'])
-                console.log(res.toJSON());
                 resolve(res.toJSON());
             })
         })

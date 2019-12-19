@@ -6,7 +6,8 @@
 - superagent 및 Moesif CORS 사용
 
 ### 2. OCR 누를때마다 링크 바뀌는 현상
-- 
+- 맨 마지막으로 요청한 링크에 대해서만 OCR처리를 하면 된다.
+- 보안문자 이미지를 서버에 저장 -> OCR API의 이미지 input으로 해당 URL을 입력한다
 
 ### 3. superagent로 받아온 response parsing하는 문제
 - document.implementation.createHTMLDocument()를 이용해서 response를 xml 형식으로 변환, 해당 DOM 내에서 데이터 추출
